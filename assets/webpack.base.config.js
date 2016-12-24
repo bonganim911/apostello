@@ -1,19 +1,25 @@
 var path = require("path");
 var webpack = require('webpack');
 
+if (process.env.WATCH) {
+  elmLoader = 'elm-webpack-loader?debug=true?warn=true';
+} else {
+  elmLoader = 'elm-webpack-loader';
+}
+
 module.exports = {
   context: __dirname,
 
   entry: {
     app: './js/app',
     tour: './js/tour',
-    groupcomposer: './elm/groupcomposer',
     vendor: [
       'datetimepicker',
       'jquery',
-      'react',
-      'react-dom',
-      './semantic/dist/semantic.js',
+      'inferno-compat',
+      'inferno',
+      './semantic/dist/components/transition.js',
+      './semantic/dist/components/dropdown.js',
     ]
   },
 
@@ -25,7 +31,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      jquery: 'jquery/src/jquery',
+			jquery: 'jquery/src/jquery',
+			'react': 'inferno-compat',
+			'react-dom': 'inferno-compat',
     },
   },
 
@@ -38,7 +46,12 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery"
-    })
+    }),
+    //
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.js'
+    }),
   ],
 
   module: {
@@ -56,9 +69,13 @@ module.exports = {
       {
         test: /\.elm?$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader: 'elm-webpack'
+        loader: elmLoader,
       }
     ],
+  },
+
+  performance: {
+    hints: false,
   },
 
   devtool: 'cheap-module-source-map',
