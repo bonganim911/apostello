@@ -2,6 +2,3 @@
 
 swap_file_path: /swapfile
 swap_file_size_gb: 1
-
-py36_version: 3.6.0b4
-py36_checksum: ab3ddd6d00e3946e0eb6fbe6a43656ff

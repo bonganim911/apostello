@@ -25,6 +25,7 @@
     - python3-pip
     - python3.4-venv
     - python3-pycurl
+    - software-properties-common
     - supervisor
   tags: packages
 

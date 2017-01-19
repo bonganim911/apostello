@@ -1,65 +1,17 @@
 ---
 - name: "[py36] check already exists"
-  stat: path=/srv/bin/python3.6/bin/python3.6
+  stat: path=/usr/bin/python3.6
   register: py36bin
 
-- name: "[py36] deps"
-  become: true
-  apt:
-    name={{ item }}
-    state=latest
+- name: "[py36] add deadsnakes ppa"
+  apt_repository:
+    repo: "ppa:fkrull/deadsnakes"
+  when: py36bin.stat.exists == false
+
+- name: "[py36] install"
+  apt: name={{ item }} update_cache={{ update_apt_cache }} force=yes state=installed
   with_items:
-    - autotools-dev
-    - blt-dev
-    - bzip2
-    - dpkg-dev
-    - g++-multilib
-    - gcc-multilib
-    - libbluetooth-dev
-    - libbz2-dev
-    - libexpat1-dev
-    - libffi-dev
-    - libffi6
-    - libffi6-dbg
-    - libgdbm-dev
-    - libgpm2
-    - liblzma-dev
-    - libncursesw5-dev
-    - libreadline-dev
-    - libsqlite3-dev
-    - libssl-dev
-    - libtinfo-dev
-    - mime-support
-    - net-tools
-    - netbase
-    - quilt
-    - tk-dev
-    - zlib1g-dev
-  when: py36bin.stat.exists == false
-
-- name: "[py36] download"
-  become: true
-  get_url:
-    url="https://www.python.org/ftp/python/3.6.0/Python-{{ py36_version }}.tar.xz"
-    dest="/tmp/"
-    checksum= "md5:{{ py36_checksum }}"
-  when: py36bin.stat.exists == false
-
-- name: "[py36] unpack"
-  unarchive:
-    src="/tmp/Python-{{ py36_version }}.tar.xz"
-    dest="/tmp"
-    copy=no
-    creates="/tmp/Python-{{ py36_version }}"
-  when: py36bin.stat.exists == false
-
-- name: "[py36] compile & install"
-  become: true
-  command: "{{ item }}"
-  args:
-    chdir: "/tmp/Python-{{ py36_version }}"
-  with_items:
-      - "./configure --prefix /srv/bin/python3.6"
-      - make
-      - make install
+    - python3.6
+    - python3.6-dev
+    - python3.6-venv
   when: py36bin.stat.exists == false

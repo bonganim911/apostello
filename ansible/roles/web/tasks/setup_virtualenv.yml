@@ -4,7 +4,7 @@
   file: path={{ virtualenv_path }} state=directory
 
 - name: Create the virtualenv
-  command: /srv/bin/python3.6/bin/python3.6 -m venv "{{ virtualenv_path }}"
+  command: python3.6 -m venv "{{ virtualenv_path }}"
            creates={{ virtualenv_path }}/bin/activate
 
 - name: Ensure gunicorn is installed
