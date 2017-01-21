@@ -59,8 +59,7 @@ class RecipientGroup(models.Model):
             return
         if limit < num_sms * self.calculate_cost():
             raise ValidationError(
-                'Sorry, you can only send messages that cost no more than ${0}.'.
-                format(limit)
+                f'Sorry, you can only send messages that cost no more than ${limit}.'
             )
 
     @cached_property
@@ -190,8 +189,7 @@ class Recipient(models.Model):
             return
         if limit < len(recipients) * settings.TWILIO_SENDING_COST * num_sms:
             raise ValidationError(
-                'Sorry, you can only send messages that cost no more than ${0}.'.
-                format(limit)
+                f'Sorry, you can only send messages that cost no more than ${limit}.'
             )
 
     @cached_property
@@ -217,12 +215,13 @@ class Recipient(models.Model):
     @cached_property
     def full_name(self):
         """Recipient's full name."""
-        return u"{fn} {ln}".format(fn=self.first_name, ln=self.last_name)
+        return f"{self.first_name} {self.last_name}"
 
     @property
     def last_sms(self):
         """Last message sent to this person"""
-        last_sms = cache.get('last_msg__{0}'.format(self.pk))
+        cache_id = f'last_msg__{self.pk}'
+        last_sms = cache.get(cache_id)
         if last_sms is None:
             msg = SmsInbound.objects.filter(sender_num=str(self.number))
             try:
@@ -233,7 +232,7 @@ class Recipient(models.Model):
                 }
             except IndexError:
                 last_sms = {'content': '', 'time_received': ''}
-            cache.set('last_msg__{0}'.format(self.pk), last_sms, 600)
+            cache.set(cache_id, last_sms, 600)
 
         return last_sms
 
@@ -623,7 +622,7 @@ class SmsInbound(models.Model):
         # invalidate live wall cache
         cache.set('live_wall_all', None, 0)
         # invalidate per person last sms cache
-        cache.set('last_msg__{0}'.format(self.sender_num), None, 0)
+        cache.set(f'last_msg__{self.sender_num}', None, 0)
 
     class Meta:
         ordering = ['-time_received']
@@ -683,12 +682,7 @@ class QueuedSms(models.Model):
     def __str__(self):
         """Pretty representation."""
         status = "Sent" if self.sent else "Queued"
-        val = "[{status}] To: {recipient} Msg: {content}\nScheduled for {time}".format(
-            status=status,
-            recipient=self.recipient,
-            content=self.content,
-            time=self.time_to_send,
-        )
+        val = f"[{status}] To: {self.recipient} Msg: {self.content}\nScheduled for {self.time_to_send}"
         return val
 
 

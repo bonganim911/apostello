@@ -43,7 +43,7 @@ def contacts():
         inner_radius=.6,
         style=clean_style_large_text,
         margin=0,
-        value_formatter=lambda x: '{}'.format(x),
+        value_formatter=lambda x: f'{x}',
     )
     archived = Recipient.objects.filter(is_archived=True).count()
     blacklisted = Recipient.objects.filter(is_blocking=True).count()
@@ -78,7 +78,7 @@ def keywords():
         inner_radius=.6,
         style=clean_style_large_text,
         margin=0,
-        value_formatter=lambda x: '{}'.format(x),
+        value_formatter=lambda x: f'{x}',
     )
     for k in Keyword.objects.filter(is_archived=False):
         pie_chart.add(str(k), k.num_matches + k.num_archived_matches)
@@ -125,7 +125,7 @@ def sms_totals():
         inner_radius=.6,
         style=clean_style_large_text,
         margin=0,
-        value_formatter=lambda x: '{}'.format(x),
+        value_formatter=lambda x: f'{x}',
     )
 
     pie_chart.add('Sent', SmsOutbound.objects.all().count())

@@ -91,11 +91,11 @@ def login(d):
 
 
 def grab_page(d, uri, desc):
-    print('Opening {0}'.format(uri))
+    print(f'Opening {uri}')
     d.get(DEMO_URL + uri)
     sleep(5)
 
-    with open('screenshots/{0}.png'.format(desc), 'wb') as f:
+    with open(f'screenshots/{desc}.png', 'wb') as f:
         f.write(d.get_screenshot_as_png())
 
     if uri == '/accounts/login':

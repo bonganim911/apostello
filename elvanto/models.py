@@ -52,10 +52,7 @@ class ElvantoGroup(models.Model):
             number = try_both_num_fields(prsn['mobile'], prsn['phone'])
         except NotValidPhoneNumber:
             print(
-                'Adding {0} {1} failed ({2},{3})'.format(
-                    prsn['firstname'], prsn['lastname'], prsn['mobile'],
-                    prsn['phone']
-                )
+                f'Adding {prsn["firstname"]} {prsn["lastname"]} failed ({prsn["mobile"]},{prsn["phone"]})'
             )
             return
         # create person
@@ -100,7 +97,7 @@ class ElvantoGroup(models.Model):
 
         Just preprend an (E) before the group name.
         """
-        return '(E) {0}'.format(self.name)
+        return f'(E) {self.name}'
 
     def __str__(self):
         """Pretty representation."""

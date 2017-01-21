@@ -99,9 +99,7 @@ class ItemView(ProfilePermsMixin, View):
                     form, self.model_class, self.identifier
                 )
                 messages.info(
-                    request, "'{0}' already exists."
-                    " You can open the menu to restore it.".
-                    format(str(new_instance))
+                    request, f"'{str(new_instance)}' already exists. You can open the menu to restore it."
                 )
                 return redirect(new_instance.get_absolute_url)
             except ArchivedItemException:

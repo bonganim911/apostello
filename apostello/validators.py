@@ -10,7 +10,7 @@ TWILIO_INFO_WORDS = ("help", "info")
 def validate_lower(value):
     """Ensure value is all lowercase."""
     if value.lower() != value:
-        raise ValidationError('{0} must be all lower case.'.format(value))
+        raise ValidationError(f'{value} must be all lower case.')
 
 
 def not_twilio_num(value):
@@ -28,8 +28,7 @@ def twilio_reserved(value):
         'name',
     ):
         raise ValidationError(
-            '{0} is a reserved keyword, please choose another.'.
-            format(value.lower())
+            f'{value.lower()} is a reserved keyword, please choose another.'
         )
 
 
@@ -52,8 +51,7 @@ def no_overlap_keyword(value):
     for keyword in keywords:
         if keyword.startswith(value) or value.startswith(keyword):
             raise ValidationError(
-                '{0} clashes with {1}, please choose another.'.
-                format(value.lower(), keyword)
+                '{value.lower()} clashes with {keyword}, please choose another.'
             )
 
 
@@ -69,8 +67,7 @@ def less_than_sms_char_limit(value):
 
     if len(value) > sms_char_lim:
         raise ValidationError(
-            'You have exceeded the maximum char limit of {0}.'.
-            format(sms_char_lim)
+            f'You have exceeded the maximum char limit of {sms_char_lim}.'
         )
 
 

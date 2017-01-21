@@ -90,8 +90,7 @@ def ask_for_name(person_from_pk, sms_body, ask_for_name):
         async(
             'apostello.tasks.notify_office_mail',
             '[Apostello] Unknown Contact!',
-            'SMS: {0}\nFrom: {1}\n\n\nThis person is unknown and has been'
-            ' asked for their name.'.format(sms_body, str(contact)),
+            f'SMS: {sms_body}\nFrom: {str(contact)}\n\n\nThis person is unknown and has been asked for their name.',
         )
 
 
@@ -170,17 +169,13 @@ def blacklist_notify(recipient_pk, sms_body, keyword):
         async(
             'apostello.tasks.notify_office_mail',
             '[Apostello] Blacklist Update',
-            "{0} ({1}) is now blocking us".format(
-                str(recipient.number),
-                str(recipient),
-            ),
+            f"{str(recipient.number)} ({str(recipient)}) is now blocking us",
         )
         return
     if recipient.is_blocking:
-        email_body = "{0} has blacklisted us in the past but has just sent " \
-            "this message:\n\n\t{1}\n\n" \
+        email_body = f"{str(recipient)} has blacklisted us in the past but has just sent " \
+            f"this message:\n\n\t{sms_body}\n\n" \
             "You may need to email them as we cannot currently reply to them."
-        email_body.format(str(recipient), sms_body)
         async(
             'apostello.tasks.notify_office_mail',
             '[Apostello] Blacklist Receipt Notice',
@@ -200,12 +195,12 @@ def send_keyword_digest():
             )
         # if any, loop over subscribers and send email
         if new_responses.count() > 0:
+            new_resp_str = "\n".join([str(x) for x in new_responses])
             for subscriber in keyword.subscribed_to_digest.all():
                 async(
                     'apostello.tasks.send_async_mail',
-                    'Daily update for "{0}" responses'.format(str(keyword)),
-                    "The following text messages have been received today:\n\n{0}".
-                    format("\n".join([str(x) for x in new_responses])),
+                    f'Daily update for "{str(keyword)}" responses',
+                    f"The following text messages have been received today:\n\n{new_resp_str}",
                     [subscriber.email]
                 )
 
@@ -230,9 +225,7 @@ def post_to_slack(attachments):
 
 def sms_to_slack(sms_body, person_name, keyword_name):
     """Post message to slack webhook."""
-    fallback = "{0}\nFrom: {1}\n(matched: {2})".format(
-        sms_body, person_name, keyword_name
-    )
+    fallback = f"{sms_body}\nFrom: {person_name}\n(matched: {keyword_name})"
     attachments = [
         {
             'fallback': fallback,

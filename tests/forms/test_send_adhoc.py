@@ -42,9 +42,7 @@ class TestAdhocFormValid():
         user.profile.message_cost_limit = 0.01
         form = SendAdhocRecipientsForm(data=form_data, user=user)
         assert not form.is_valid()
-        assert 'cost no more than ${0}'.format(
-            user.profile.message_cost_limit
-        ) in '\n'.join(form.errors['__all__'])
+        assert f'cost no more than ${user.profile.message_cost_limit}' in '\n'.join(form.errors['__all__'])
 
     def test_disabled_user_limit(
         self, form_content, form_recipients, recipients

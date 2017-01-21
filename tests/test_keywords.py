@@ -19,7 +19,7 @@ class TestOthers:
         self, keywords, smsin, users
     ):
         users['c_staff'].post(
-            '/keyword/responses/{}/'.format(keywords['test'].pk),
+            f'/keyword/responses/{keywords["test"].pk}/',
             {'tick_to_archive_all_responses': True}
         )
 

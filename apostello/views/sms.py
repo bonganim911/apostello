@@ -58,14 +58,12 @@ class SendAdhoc(SendView):
 
         if form.cleaned_data['scheduled_time'] is None:
             messages.info(
-                self.request, "Sending \"{0}\"...\n"
-                "Please check the logs for verification...".
-                format(form.cleaned_data['content'])
+                self.request, f"Sending \"{form.cleaned_data['content']}\"...\n"
+                "Please check the logs for verification..."
             )
         else:
             messages.info(
-                self.request, "'{0}' has been successfully queued.".
-                format(form.cleaned_data['content'])
+                self.request, f"'{form.cleaned_data['content']}' has been successfully queued."
             )
 
         return super(SendAdhoc, self).form_valid(form)
@@ -95,16 +93,12 @@ class SendGroup(SendView):
         )
         if form.cleaned_data['scheduled_time'] is None:
             messages.info(
-                self.request, "Sending '{0}' to '{1}'...\n"
-                "Please check the logs for verification...".format(
-                    form.cleaned_data['content'],
-                    form.cleaned_data['recipient_group']
-                )
+                self.request, f"Sending '{form.cleaned_data['content']}' to '{form.cleaned_data['recipient_group']}'...\n"
+                "Please check the logs for verification..."
             )
         else:
             messages.info(
-                self.request, "'{0}' has been successfully queued.".
-                format(form.cleaned_data['content'])
+                self.request, "'{form.cleaned_data['content']}' has been successfully queued."
             )
         return super(SendGroup, self).form_valid(form)
 

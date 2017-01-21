@@ -103,11 +103,7 @@ class InboundSms:
             async(
                 'apostello.tasks.notify_office_mail',
                 '[Apostello] New Signup!',
-                'SMS:\n\t{0}\nFrom:\n\t{1} ({2})\n'.format(
-                    self.sms_body,
-                    str(self.contact),
-                    self.contact_number,
-                ),
+                f'SMS:\n\t{self.sms_body}\nFrom:\n\t{str(self.contact)} ({self.contact_number})\n',
             )
             # TODO update to use .format() and add help text to model
             return fetch_default_reply(
@@ -117,9 +113,7 @@ class InboundSms:
             async(
                 'apostello.tasks.notify_office_mail',
                 '[Apostello] New Signup - FAILED!',
-                'SMS:\n\t{0}\nFrom:\n\t{1}\n'.format(
-                    self.sms_body, self.contact_number
-                ),
+                f'SMS:\n\t{self.sms_body}\nFrom:\n\t{self.contact_number}\n',
             )
             return fetch_default_reply('name_failure_reply')
 

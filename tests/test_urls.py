@@ -109,7 +109,7 @@ class TestAPITokens:
         t = Token.objects.create(user=users['staff'])
         r = users['c_out'].get(
             '/api/v1/recipients/',
-            **{'HTTP_AUTHORIZATION': 'Token {}'.format(t.key)}
+            **{'HTTP_AUTHORIZATION': f'Token {t.key}'}
         )
         assert r.status_code == 200
         data = r.json()

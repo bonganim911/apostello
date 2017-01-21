@@ -14,7 +14,7 @@ def yapf_file(f):
     """Run yapf on file."""
     print(f.path)
     subprocess.call(
-        "yapf -i {} --style scripts/.style.yapf".format(f.path), shell=True
+        f"yapf -i {f.path} --style scripts/.style.yapf", shell=True
     )
 
 

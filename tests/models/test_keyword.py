@@ -105,7 +105,7 @@ class TestKeywords():
     def test_get_log_link_keyword(self, keywords):
         assert Keyword.get_log_link(
             keywords['test']
-        ) == '/keyword/responses/{0}/'.format(keywords['test'].pk)
+        ) == f'/keyword/responses/{keywords["test"].pk}/'
 
     def test_lookup_colour_test(self, keywords):
         assert Keyword.lookup_colour('test') == '#098f6b'
@@ -118,15 +118,15 @@ class TestKeywords():
         assert Keyword.match("stop    ") == 'stop'
         assert Keyword.match("\nSTOP    ") == 'stop'
         for x in ["stopall", "unsubscribe", "cancel", "end", "quit"]:
-            assert Keyword.match("{0}".format(x)) == 'stop'
+            assert Keyword.match(f"{x}") == 'stop'
 
     def test_start(self):
         for x in ["start", "yes"]:
-            assert Keyword.match("{0}".format(x)) == 'start'
+            assert Keyword.match(f"{x}") == 'start'
 
     def test_info(self):
         for x in ["help", "info"]:
-            assert Keyword.match("{0}".format(x)) == 'info'
+            assert Keyword.match(f"{x}") == 'info'
 
     def test_name(self):
         assert Keyword.match("name John Calvin") == 'name'

@@ -143,7 +143,7 @@ class UserChoiceField(ModelMultipleChoiceField):
 
     def label_from_instance(self, obj):
         """Display the user's label."""
-        return '{0} ({1})'.format(obj.email, obj.username)
+        return f'{obj.email} ({obj.username})'
 
 
 class KeywordForm(forms.ModelForm):

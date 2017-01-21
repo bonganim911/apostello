@@ -10,7 +10,7 @@ from elvanto.exceptions import ElvantoException, NotValidPhoneNumber
 def elvanto(end_point, **kwargs):
     """Shortcut to create Elvanto API instance."""
     base_url = 'https://api.elvanto.com/v1/'
-    e_url = '{0}{1}.json'.format(base_url, end_point)
+    e_url = f'{base_url}{end_point}.json'
     resp = retry_request(
         e_url, 'post', json=kwargs, auth=(settings.ELVANTO_KEY, '_')
     )

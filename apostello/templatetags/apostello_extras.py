@@ -95,7 +95,7 @@ def fab_keyword_csv(keyword):
         reverse(
             'keyword_csv', args=[keyword.pk]
         ),
-        'Export {k} responses'.format(k=keyword.keyword),
+        f'Export {keyword.keyword} responses',
         'download'
     )
 
@@ -111,7 +111,7 @@ def fab_keyword_responses(keyword):
         reverse(
             'keyword_responses', args=[keyword.pk]
         ),
-        'Replies ({n})'.format(n=keyword.num_matches),
+        f'Replies ({keyword.num_matches})',
         'inbox'
     )
 
@@ -122,6 +122,6 @@ def fab_keyword_responses_archive(keyword):
         reverse(
             'keyword_responses_archive', args=[keyword.pk]
         ),
-        'Archived Replies ({n})'.format(n=keyword.num_archived_matches),
+        f'Archived Replies ({keyword.num_archived_matches})',
         'inbox'
     )
