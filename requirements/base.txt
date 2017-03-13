@@ -11,7 +11,7 @@ django==1.10.6
 djangorestframework==3.6.2
 djangorestframework-queryfields==1.0.0
 drfdocs==0.0.11
-gunicorn==19.6.0
+gunicorn==19.7.0
 ipython==5.1.0
 opbeat==3.5.2
 psycopg2==2.6.2
