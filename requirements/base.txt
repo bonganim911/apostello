@@ -1,6 +1,6 @@
 apostello-form==0.0.1
 dj-database-url==0.4.2
-django-allauth==0.30.0
+django-allauth==0.31.0
 django-extensions==1.7.6
 django-phonenumber-field==1.1.0
 django-q==0.7.18
