@@ -7,7 +7,7 @@ django-q==0.7.18
 django-redis==4.7.0
 django-solo==1.1.2
 django-twilio==0.8.0
-django==1.10.5
+django==1.10.6
 djangorestframework==3.5.3
 djangorestframework-queryfields==1.0.0
 drfdocs==0.0.11
